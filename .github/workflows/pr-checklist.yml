@@ -1,0 +1,41 @@
+name: PR Checklist
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+jobs:
+  checklist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR checklist
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || "";
+
+            const required = [
+              "I have included my username as the author or translator at the beginning of the document.",
+              "I agree to publish my contribution under the CC BY 4.0 license."
+            ];
+
+            const missing = required.filter(item => {
+              const escaped = item.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              const checked = new RegExp(
+                `^- \\[[xX]\\] ${escaped}$`,
+                'mi'
+              );
+
+              return !checked.test(body);
+            });
+
+            if (missing.length > 0) {
+              core.setFailed(
+                "Please complete all required checklist items before merging this PR:\n\n" +
+                missing.map(item => `- ${item}`).join("\n")
+              );
+            }
