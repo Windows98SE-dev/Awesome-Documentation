@@ -26,7 +26,7 @@ jobs:
             const missing = required.filter(item => {
               const escaped = item.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
               const checked = new RegExp(
-                `^- \\[[xX]\\] ${escaped}$`,
+                `^- \\[\\s*[xX]\\s*\\]\\s+${escaped}$`,
                 'mi'
               );
 
