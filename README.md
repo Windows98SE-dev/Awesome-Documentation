@@ -6,3 +6,6 @@ Documentation will always be in .MD unless forced to use a different format, if 
 
 ## Contributing
 Read CONTRIBUTING.md
+
+## Why is Copilot in the contributors ?
+Because I had an issue with .github/workflows/pr-checklist.yml so I asked it to fix it, but then I realized pr-checklist.yml is useless so I tried to cancel the request but it already comitted
